@@ -3,4 +3,4 @@ angular.module('DashBoardApp.controllers')
     UserService.get($routeParams.id).then(function(data) {
       $scope.user = data;
     });
-  }]);
+}]);

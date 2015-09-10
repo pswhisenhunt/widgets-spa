@@ -3,7 +3,8 @@ var angular = require('angular');
 var DashBoardApp = angular.module('DashBoardApp', [
   require('angular-route'),
   'DashBoardApp.controllers',
-  'DashBoardApp.services'
+  'DashBoardApp.services',
+  'DashBoardApp.filters'
 ]);
 
 DashBoardApp.config(['$routeProvider',
@@ -19,7 +20,7 @@ DashBoardApp.config(['$routeProvider',
       }).
       when('/widgets', {
         templateUrl: '/views/widgets/widgetsListView.html',
-        controller: 'WidgetCtrl'
+        controller: 'WidgetsCtrl'
       }).
       when('/widgets/:id', {
         templateUrl: '/views/widgets/widgetDetailView.html',

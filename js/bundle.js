@@ -4,7 +4,8 @@ var angular = require('angular');
 var DashBoardApp = angular.module('DashBoardApp', [
   require('angular-route'),
   'DashBoardApp.controllers',
-  'DashBoardApp.services'
+  'DashBoardApp.services',
+  'DashBoardApp.filters'
 ]);
 
 DashBoardApp.config(['$routeProvider',
@@ -20,7 +21,7 @@ DashBoardApp.config(['$routeProvider',
       }).
       when('/widgets', {
         templateUrl: '/views/widgets/widgetsListView.html',
-        controller: 'WidgetCtrl'
+        controller: 'WidgetsCtrl'
       }).
       when('/widgets/:id', {
         templateUrl: '/views/widgets/widgetDetailView.html',
@@ -32,7 +33,7 @@ DashBoardApp.config(['$routeProvider',
     }
 ]);
 
-},{"angular":13,"angular-route":11}],2:[function(require,module,exports){
+},{"angular":14,"angular-route":12}],2:[function(require,module,exports){
 angular.module('DashBoardApp.controllers', []);
 
 },{}],3:[function(require,module,exports){
@@ -41,7 +42,7 @@ angular.module('DashBoardApp.controllers')
     UserService.get($routeParams.id).then(function(data) {
       $scope.user = data;
     });
-  }]);
+}]);
 
 },{}],4:[function(require,module,exports){
 angular.module('DashBoardApp.controllers')
@@ -49,24 +50,35 @@ angular.module('DashBoardApp.controllers')
     UserService.all().then(function(data) {
       $scope.users = data;
     });
-  }]);
+}]);
 
 },{}],5:[function(require,module,exports){
 angular.module('DashBoardApp.controllers')
-  .controller('WidgetssCtrl', ['$scope', 'WdigetService', function($scope, WidgetService) {
-
-  }]);
+  .controller('WidgetDetailCtrl', ['$scope', '$routeParams', 'WidgetService', function($scope, $routeParams, WidgetService) {
+    WidgetService.get($routeParams.id).then(function(data) {
+      $scope.widget = data;
+    });
+}]);
 
 },{}],6:[function(require,module,exports){
 angular.module('DashBoardApp.controllers')
-  .controller('WidgetDetailCtrl', ['$scope', 'WidgetService', function($scope, WidgetService) {
-
-  }]);
+  .controller('WidgetsCtrl', ['$scope', 'WidgetService', function($scope, WidgetService) {
+    WidgetService.all().then(function(data) {
+      $scope.widgets = data;
+    });
+}]);
 
 },{}],7:[function(require,module,exports){
-angular.module('DashBoardApp.services', []);
+angular.module('DashBoardApp.filters', []).filter('isTrue', function() {
+  return function(condition) {
+    return condition ? '\u2713' : '\u2718';
+  }
+});
 
 },{}],8:[function(require,module,exports){
+angular.module('DashBoardApp.services', []);
+
+},{}],9:[function(require,module,exports){
 angular.module('DashBoardApp.services')
   .factory('UserService', ['$http', function($http) {
     var baseUrl = "http://spa.tglrw.com:4000/users";
@@ -77,7 +89,6 @@ angular.module('DashBoardApp.services')
         });
       },
       get: function(id) {
-        console.log(id)
         return $http.get(baseUrl + '/' + id).then(function(user) {
           return user.data;
         })
@@ -86,13 +97,26 @@ angular.module('DashBoardApp.services')
   }
 ]);
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 angular.module('DashBoardApp.services')
   .factory('WidgetService', ['$http', function($http) {
+    var baseUrl = "http://spa.tglrw.com:4000/widgets";
+    return {
+      all: function() {
+        return $http.get(baseUrl).then(function(widgets) {
+          return widgets.data;
+        });
+      },
+      get: function(id) {
+        return $http.get(baseUrl + '/' + id).then(function(widget) {
+          return widget.data;
+        })
+      }
+    }
+  }
+]);
 
-  }]);
-
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.5
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -1085,11 +1109,11 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 require('./angular-route');
 module.exports = 'ngRoute';
 
-},{"./angular-route":10}],12:[function(require,module,exports){
+},{"./angular-route":11}],13:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.5
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -29778,8 +29802,8 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":12}]},{},[1,2,3,4,5,6,7,8,9]);
+},{"./angular":13}]},{},[1,2,3,4,5,6,7,8,9,10]);

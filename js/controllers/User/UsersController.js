@@ -3,4 +3,4 @@ angular.module('DashBoardApp.controllers')
     UserService.all().then(function(data) {
       $scope.users = data;
     });
-  }]);
+}]);

@@ -2,7 +2,7 @@
 <div class="col-lg-6">
   <div class="widget">
     <div class="widget-header">Widgets
-      <div class="pull-right"><input type="text" class="form-control input-sm"></div>
+      <div class="pull-right"><input type="text" class="form-control input-sm" placeholder="&#128269;" ng-Model="searchQuery"></div>
     </div>
     <div class="table-responsive">
       <table class="table">
@@ -10,16 +10,20 @@
           <tr>
             <th class="text-center">ID</th>
             <th>Name</th>
+            <th>Color</th>
+            <th>Price</th>
+            <th>Melts?</th>
+            <th>Inventory</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="text-center">1</td>
-            <td>A</td>
-          </tr>
-          <tr>
-            <td class="text-center">2</td>
-            <td>B</td>
+          <tr ng-repeat="widget in widgets | filter: searchQuery | orderBy: widget.id">
+            <td>{{widget.id}}</td>
+            <td><a href="#/widgets/{{widget.id}}">{{widget.name}}</a></td>
+            <td>{{widget.color}}</td>
+            <td>{{widget.price}}</td>
+            <td>{{widget.melts | isTrue }}</td>
+            <td>{{widget.inventory}}</td>
           </tr>
         </tbody>
       </table>
