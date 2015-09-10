@@ -1,8 +1,16 @@
+<!-- include create widgets form -->
+<div ng-include src="'views/widgets/createWidgetForm.html'"></div>
+
 <!-- Widget listing -->
-<div class="col-lg-6">
+<div class="col-lg-12">
   <div class="widget">
     <div class="widget-header">Widgets
-      <div class="pull-right"><input type="text" class="form-control input-sm" placeholder="&#128269;" ng-Model="searchQuery"></div>
+      <div class="pull-right">
+        <button class="btn btn-sm btn-info" ng-click="setCreateWidgetForm()">+ Create</button>
+      </div>
+      <div class="pull-right">
+        <input type="text" class="form-control input-sm" placeholder="&#128269;" ng-Model="searchQuery">
+      </div>
     </div>
     <div class="table-responsive">
       <table class="table">

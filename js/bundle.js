@@ -38,10 +38,7 @@ DashBoardApp.config(['$routeProvider',
 ]);
 
 },{"angular":14,"angular-route":12}],2:[function(require,module,exports){
-angular.module('DashBoardApp.controllers', []);
-
-
-angular.module('DashBoardApp.controllers')
+angular.module('DashBoardApp.controllers', [])
   .controller('DashboardCtrl', ['$scope', 'UserService', 'WidgetService', function($scope, UserService, WidgetService) {
     UserService.all().then(function(data) {
       $scope.users = data;
@@ -71,25 +68,72 @@ angular.module('DashBoardApp.controllers')
 },{}],5:[function(require,module,exports){
 angular.module('DashBoardApp.controllers')
   .controller('WidgetDetailCtrl', ['$scope', '$routeParams', 'WidgetService', function($scope, $routeParams, WidgetService) {
-    WidgetService.get($routeParams.id).then(function(data) {
-      $scope.widget = data;
-      console.log($scope.widget)
-    });
+
+    $scope.fetchWidget = function() {
+      WidgetService.get($routeParams.id).then(function(data) {
+        $scope.widget = data;
+      });
+    }
+
+    $scope.fetchWidget()
+
 }]);
 
 },{}],6:[function(require,module,exports){
 angular.module('DashBoardApp.controllers')
   .controller('WidgetsCtrl', ['$scope', 'WidgetService', function($scope, WidgetService) {
-    WidgetService.all().then(function(data) {
-      $scope.widgets = data;
-    });
+
+    $scope.fetchWidgets = function() {
+      WidgetService.all().then(function(data) {
+          $scope.widgets = data;
+      });
+    }
+    
+    $scope.fetchWidgets();
+
+    $scope.createWidgetForm = false;
+
+    $scope.newWidget = {
+      ID: 0,
+      name: '',
+      color: '',
+      price: 0,
+      melts: false,
+      inventory: 0
+    }
+
+    $scope.setCreateWidgetForm = function() {
+      $scope.createWidgetForm = !$scope.createWidgetForm;
+    }
+
+
+    $scope.createWidget = function() {
+      WidgetService.create($scope.newWidget).then(function(data) {
+        $scope.resetForm();
+      }).then(function() {
+        $scope.fetchWidgets();
+      });
+    }
+
+    $scope.resetForm = function() {
+      $scope.newWidget = {
+        ID: 0,
+        name: '',
+        color: '',
+        price: 0,
+        melts: false,
+        inventory: 0
+      }
+      $scope.setCreateWidgetForm()
+    }
 }]);
 
 },{}],7:[function(require,module,exports){
-angular.module('DashBoardApp.filters', []).filter('isTrue', function() {
-  return function(condition) {
-    return condition ? '\u2713' : '\u2718';
-  }
+angular.module('DashBoardApp.filters', [])
+  .filter('isTrue', function() {
+    return function(condition) {
+      return condition ? '\u2713' : '\u2718';
+    }
 });
 
 },{}],8:[function(require,module,exports){
@@ -128,6 +172,13 @@ angular.module('DashBoardApp.services')
         return $http.get(baseUrl + '/' + id).then(function(widget) {
           return widget.data;
         })
+      },
+      create: function(data) {
+        return $http.post(baseUrl, data);
+      },
+      // TODO
+      update: function(data) {
+        
       }
     }
   }
