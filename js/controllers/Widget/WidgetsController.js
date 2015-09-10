@@ -6,10 +6,10 @@ angular.module('DashBoardApp.controllers')
           $scope.widgets = data;
       });
     }
-    
+
     $scope.fetchWidgets();
 
-    $scope.createWidgetForm = false;
+    $scope.showCreateWidgetForm = false;
 
     $scope.newWidget = {
       ID: 0,
@@ -20,8 +20,8 @@ angular.module('DashBoardApp.controllers')
       inventory: 0
     }
 
-    $scope.setCreateWidgetForm = function() {
-      $scope.createWidgetForm = !$scope.createWidgetForm;
+    $scope.setCreateWidgetFormDisplay = function() {
+      $scope.showCreateWidgetForm = !$scope.showCreateWidgetForm;
     }
 
 
@@ -42,6 +42,6 @@ angular.module('DashBoardApp.controllers')
         melts: false,
         inventory: 0
       }
-      $scope.setCreateWidgetForm()
+      $scope.setCreateWidgetFormDisplay()
     }
 }]);
