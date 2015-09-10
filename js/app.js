@@ -10,6 +10,10 @@ var DashBoardApp = angular.module('DashBoardApp', [
 DashBoardApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
+      when('/dashboard', {
+        templateUrl: "../views/dashboard/dashboard.html",
+        controller: 'DashboardCtrl'
+      }).
       when('/users', {
         templateUrl: '../views/users/usersListView.html',
         controller: 'UsersCtrl'
@@ -27,7 +31,7 @@ DashBoardApp.config(['$routeProvider',
         controller: 'WidgetDetailCtrl'
       }).
       otherwise({
-          redirectTo: '/users'
+          redirectTo: '/dashboard'
       });
     }
 ]);

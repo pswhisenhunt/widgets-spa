@@ -11,6 +11,10 @@ var DashBoardApp = angular.module('DashBoardApp', [
 DashBoardApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
+      when('/dashboard', {
+        templateUrl: "../views/dashboard/dashboard.html",
+        controller: 'DashboardCtrl'
+      }).
       when('/users', {
         templateUrl: '../views/users/usersListView.html',
         controller: 'UsersCtrl'
@@ -28,13 +32,25 @@ DashBoardApp.config(['$routeProvider',
         controller: 'WidgetDetailCtrl'
       }).
       otherwise({
-          redirectTo: '/users'
+          redirectTo: '/dashboard'
       });
     }
 ]);
 
 },{"angular":14,"angular-route":12}],2:[function(require,module,exports){
 angular.module('DashBoardApp.controllers', []);
+
+
+angular.module('DashBoardApp.controllers')
+  .controller('DashboardCtrl', ['$scope', 'UserService', 'WidgetService', function($scope, UserService, WidgetService) {
+    UserService.all().then(function(data) {
+      $scope.users = data;
+    });
+
+    WidgetService.all().then(function(data) {
+      $scope.widgets = data;
+    });
+}]);
 
 },{}],3:[function(require,module,exports){
 angular.module('DashBoardApp.controllers')
@@ -57,6 +73,7 @@ angular.module('DashBoardApp.controllers')
   .controller('WidgetDetailCtrl', ['$scope', '$routeParams', 'WidgetService', function($scope, $routeParams, WidgetService) {
     WidgetService.get($routeParams.id).then(function(data) {
       $scope.widget = data;
+      console.log($scope.widget)
     });
 }]);
 
