@@ -49,21 +49,13 @@ angular.module('DashBoardApp.controllers', [])
       $location.path(path);
     }
 
-    $scope.fetchUsers = function() {
-      UserService.all().then(function(data) {
-        $scope.users = data;
-      });
-    }
+    UserService.all().then(function(data) {
+      $scope.users = data;
+    });
 
-    $scope.fetchWidgets = function() {
-      WidgetService.all().then(function(data) {
-        $scope.widgets = data;
-      });
-    }
-
-    $scope.fetchUsers();
-
-    $scope.fetchWidgets();
+    WidgetService.all().then(function(data) {
+      $scope.widgets = data;
+    });
 }]);
 
 },{}],3:[function(require,module,exports){
@@ -97,8 +89,8 @@ angular.module('DashBoardApp.controllers')
     $scope.updateWidget = function() {
       // xeditable (library I'm using for edit-in-place) uses an object for editable-select statements.
       // We need to store the color value as a string and the melts value as a boolean, not object values.
-      // These conditional statements determine if the color or melts values have updated.
-      // If they have, they set the correct value before updating the widget on the server.
+      // These conditional statements determine if the color or melts values are objects.
+      // If they are, then set the correct value before updating the widget on the server.
 
       if ($scope.widget.color instanceof Object) {
         $scope.widget.color = $scope.widget.color.value;
@@ -125,6 +117,7 @@ angular.module('DashBoardApp.controllers')
       $scope.setEditWidgetFormDisplay();
     };
 
+    // xeditable's editable-select feature expects an object
     $scope.widgetColors = [
      {value: 'red'},
      {value: 'purple'},
@@ -148,6 +141,7 @@ angular.module('DashBoardApp.controllers')
     $scope.fetchWidgets = function() {
       WidgetService.all().then(function(data) {
           $scope.widgets = data;
+          $scope.widgetsLength = data.length;
       });
     }
 
@@ -156,12 +150,12 @@ angular.module('DashBoardApp.controllers')
     $scope.showCreateWidgetForm = false;
 
     $scope.newWidget = {
-      ID: 0,
+      ID: $scope.widgetsLength + 1,
       name: '',
       color: '',
-      price: 0,
+      price: '',
       melts: false,
-      inventory: 0
+      inventory: ''
     }
 
     $scope.setCreateWidgetFormDisplay = function() {
@@ -169,17 +163,9 @@ angular.module('DashBoardApp.controllers')
     }
 
 
-    $scope.createWidget = function() {
-      WidgetService.create($scope.newWidget).then(function(data) {
-        $scope.resetForm();
-      }).then(function() {
-        $scope.fetchWidgets();
-      });
-    }
-
     $scope.resetForm = function() {
       $scope.newWidget = {
-        ID: 0,
+        ID: $scope.widgetsLength + 1,
         name: '',
         color: '',
         price: 0,
@@ -187,6 +173,14 @@ angular.module('DashBoardApp.controllers')
         inventory: 0
       }
       $scope.setCreateWidgetFormDisplay()
+    }
+
+    $scope.createWidget = function() {
+      WidgetService.create($scope.newWidget).then(function(data) {
+        $scope.resetForm();
+      }).then(function() {
+        $scope.fetchWidgets();
+      });
     }
 }]);
 

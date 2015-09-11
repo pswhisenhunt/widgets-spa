@@ -4,6 +4,7 @@ angular.module('DashBoardApp.controllers')
     $scope.fetchWidgets = function() {
       WidgetService.all().then(function(data) {
           $scope.widgets = data;
+          $scope.widgetsLength = data.length;
       });
     }
 
@@ -12,12 +13,12 @@ angular.module('DashBoardApp.controllers')
     $scope.showCreateWidgetForm = false;
 
     $scope.newWidget = {
-      ID: 0,
+      ID: $scope.widgetsLength + 1,
       name: '',
       color: '',
-      price: 0,
+      price: '',
       melts: false,
-      inventory: 0
+      inventory: ''
     }
 
     $scope.setCreateWidgetFormDisplay = function() {
@@ -25,17 +26,9 @@ angular.module('DashBoardApp.controllers')
     }
 
 
-    $scope.createWidget = function() {
-      WidgetService.create($scope.newWidget).then(function(data) {
-        $scope.resetForm();
-      }).then(function() {
-        $scope.fetchWidgets();
-      });
-    }
-
     $scope.resetForm = function() {
       $scope.newWidget = {
-        ID: 0,
+        ID: $scope.widgetsLength + 1,
         name: '',
         color: '',
         price: 0,
@@ -43,5 +36,13 @@ angular.module('DashBoardApp.controllers')
         inventory: 0
       }
       $scope.setCreateWidgetFormDisplay()
+    }
+
+    $scope.createWidget = function() {
+      WidgetService.create($scope.newWidget).then(function(data) {
+        $scope.resetForm();
+      }).then(function() {
+        $scope.fetchWidgets();
+      });
     }
 }]);

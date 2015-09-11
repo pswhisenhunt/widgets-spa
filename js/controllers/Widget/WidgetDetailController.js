@@ -40,6 +40,7 @@ angular.module('DashBoardApp.controllers')
       $scope.setEditWidgetFormDisplay();
     };
 
+    // xeditable's editable-select feature expects an object
     $scope.widgetColors = [
      {value: 'red'},
      {value: 'purple'},

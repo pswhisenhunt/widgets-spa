@@ -4,19 +4,11 @@ angular.module('DashBoardApp.controllers', [])
       $location.path(path);
     }
 
-    $scope.fetchUsers = function() {
-      UserService.all().then(function(data) {
-        $scope.users = data;
-      });
-    }
+    UserService.all().then(function(data) {
+      $scope.users = data;
+    });
 
-    $scope.fetchWidgets = function() {
-      WidgetService.all().then(function(data) {
-        $scope.widgets = data;
-      });
-    }
-
-    $scope.fetchUsers();
-
-    $scope.fetchWidgets();
+    WidgetService.all().then(function(data) {
+      $scope.widgets = data;
+    });
 }]);

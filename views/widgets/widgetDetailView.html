@@ -25,7 +25,7 @@
           </thead>
           <tbody>
             <tr>
-              <td class="text-center">{{widget.id}}</td>
+              <td class="text-center" ng-Model="widget.id">{{widget.id}}</td>
               <td>
                 <!-- edit in place -->
                 <a href="#" editable-text="widget.name" onaftersave="updateWidget()">{{widget.name || 'not set'}}</a>
@@ -38,12 +38,12 @@
               </td>
               <td>
                 <!-- edit in place -->
-                <a href="#" editable-text="widget.price" onaftersave="updateWidget()">${{widget.price || 'not set'}}</a>
+                <a href="#" editable-text="widget.price" onaftersave="updateWidget()">{{widget.price | currency }}</a>
               </td>
               <td>
                 <!-- edit in place -->
                 <a href="#" editable-select="widget.melts" e-ng-options="m.value for m in hasMelts" onaftersave="updateWidget()">
-                  {{widget.melts}}
+                  {{widget.melts | isTrue}}
                 </a>
               </td>
               <td>

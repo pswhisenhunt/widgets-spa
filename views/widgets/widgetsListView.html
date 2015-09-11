@@ -29,7 +29,7 @@
             <td>{{widget.id}}</td>
             <td><a href="#/widgets/{{widget.id}}">{{widget.name}}</a></td>
             <td>{{widget.color}}</td>
-            <td>{{widget.price}}</td>
+            <td>{{widget.price | currency}}</td>
             <td>{{widget.melts | isTrue }}</td>
             <td>{{widget.inventory}}</td>
           </tr>

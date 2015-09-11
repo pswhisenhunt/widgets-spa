@@ -6,14 +6,8 @@ module.exports = function(grunt) {
           'js/bundle.js' : ['js/**/*', 'js/*.js']
         }
       }
-    },
-    watch: {
-      scripts: {
-        files: ['js/*.js', 'js/**/*.js']
-      }
     }
   });
   grunt.loadNpmTasks('grunt-browserify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.registerTask('default', ['browserify', 'watch']);
+  grunt.registerTask('default', ['browserify']);
 }
