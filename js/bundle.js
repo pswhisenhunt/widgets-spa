@@ -50,11 +50,11 @@ angular.module('DashBoardApp.controllers', [])
     }
 
     UserService.all().then(function(data) {
-      $scope.users = data;
+      $scope.numberOfUsers = data.length;
     });
 
     WidgetService.all().then(function(data) {
-      $scope.widgets = data;
+      $scope.numberOfWidgets = data.length;
     });
 }]);
 
