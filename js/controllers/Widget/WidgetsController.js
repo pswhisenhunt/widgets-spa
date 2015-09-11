@@ -25,7 +25,6 @@ angular.module('DashBoardApp.controllers')
       $scope.showCreateWidgetForm = !$scope.showCreateWidgetForm;
     }
 
-
     $scope.resetForm = function() {
       $scope.newWidget = {
         ID: $scope.widgetsLength + 1,

@@ -3,7 +3,7 @@ angular.module('DashBoardApp.controllers', [])
     $scope.go = function(path) {
       $location.path(path);
     }
-
+    
     UserService.all().then(function(data) {
       $scope.numberOfUsers = data.length;
     });

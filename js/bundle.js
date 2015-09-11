@@ -48,7 +48,7 @@ angular.module('DashBoardApp.controllers', [])
     $scope.go = function(path) {
       $location.path(path);
     }
-
+    
     UserService.all().then(function(data) {
       $scope.numberOfUsers = data.length;
     });
@@ -162,7 +162,6 @@ angular.module('DashBoardApp.controllers')
       $scope.showCreateWidgetForm = !$scope.showCreateWidgetForm;
     }
 
-
     $scope.resetForm = function() {
       $scope.newWidget = {
         ID: $scope.widgetsLength + 1,
@@ -208,7 +207,7 @@ angular.module('DashBoardApp.services')
       get: function(id) {
         return $http.get(baseUrl + '/' + id).then(function(user) {
           return user.data;
-        })
+        });
       }
     }
   }
