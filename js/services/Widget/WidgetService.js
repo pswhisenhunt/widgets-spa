@@ -15,9 +15,8 @@ angular.module('DashBoardApp.services')
       create: function(data) {
         return $http.post(baseUrl, data);
       },
-      // TODO
       update: function(data) {
-        
+        return $http.put(baseUrl + '/' + data.id, data);
       }
     }
   }

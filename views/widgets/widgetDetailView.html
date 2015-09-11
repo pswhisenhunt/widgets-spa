@@ -28,27 +28,27 @@
               <td class="text-center">{{widget.id}}</td>
               <td>
                 <!-- edit in place -->
-                <a href="#" editable-text="widget.name">{{widget.name || 'not set'}}</a>
+                <a href="#" editable-text="widget.name" onaftersave="updateWidget()">{{widget.name || 'not set'}}</a>
               </td>
               <td>
                 <!-- edit in place -->
-                <a href="#" editable-select="widget.color" e-ng-options="c.value as c.color for c in widgetColors">
+                <a href="#" editable-select="widget.color" e-ng-options="c.value for c in widgetColors" onaftersave="updateWidget()">
                   {{widget.color || 'not set'}}
                 </a>
               </td>
               <td>
                 <!-- edit in place -->
-                <a href="#" editable-text="widget.price">${{widget.price || 'not set'}}</a>
+                <a href="#" editable-text="widget.price" onaftersave="updateWidget()">${{widget.price || 'not set'}}</a>
               </td>
               <td>
                 <!-- edit in place -->
-                <a href="#" editable-select="widget.melts" e-ng-options="m.id as m.value for m in hasMelts">
-                  {{widget.melts | isTrue}}
+                <a href="#" editable-select="widget.melts" e-ng-options="m.value for m in hasMelts" onaftersave="updateWidget()">
+                  {{widget.melts}}
                 </a>
               </td>
               <td>
                 <!-- edit in place -->
-                <a href="#" editable-text="widget.inventory">{{widget.inventory || 'not set'}}</a>
+                <a href="#" editable-text="widget.inventory" onaftersave="updateWidget()">{{widget.inventory || 'not set'}}</a>
               </td>
             </tr>
           </tbody>

@@ -90,36 +90,55 @@ angular.module('DashBoardApp.controllers')
       WidgetService.get($routeParams.id).then(function(data) {
         $scope.widget = data;
       });
-    }
+    };
 
-    $scope.fetchWidget()
+    $scope.fetchWidget();
+
+    $scope.updateWidget = function() {
+      // xeditable (library I'm using for edit-in-place) uses an object for editable-select statements.
+      // We need to store the color value as a string and the melts value as a boolean, not object values.
+      // These conditional statements determine if the color or melts values have updated.
+      // If they have, they set the correct value before updating the widget on the server.
+
+      if ($scope.widget.color instanceof Object) {
+        $scope.widget.color = $scope.widget.color.value;
+      }
+      if($scope.widget.melts instanceof Object) {
+        $scope.widget.melts = $scope.widget.melts.value;
+      }
+
+      WidgetService.update($scope.widget).then(function(data) {
+        if ($scope.showEditWidgetForm) {
+          $scope.resetForm();
+        }
+      });
+    };
 
     $scope.showEditWidgetForm = false;
 
     $scope.setEditWidgetFormDisplay = function() {
       $scope.showEditWidgetForm = !$scope.showEditWidgetForm;
-    }
+    };
 
     $scope.resetForm = function() {
       $scope.fetchWidget();
       $scope.setEditWidgetFormDisplay();
-    }
+    };
 
     $scope.widgetColors = [
-     {value: 1, color: 'red'},
-     {value: 2, color: 'purple'},
-     {value: 3, color: 'black'},
-     {value: 4, color: 'green'},
-     {value: 5, color: 'magenta'},
-     {value: 6, color: 'white'},
-     {value: 7, color: 'depends on the viewing angle'}
+     {value: 'red'},
+     {value: 'purple'},
+     {value: 'black'},
+     {value: 'green'},
+     {value: 'magenta'},
+     {value: 'white'},
+     {value: 'depends on the viewing angle'}
    ];
 
    $scope.hasMelts = [
-     {id: 1, value: true},
-     {id: 2, value: false}
-   ]
-
+     {value: true},
+     {value: false}
+   ];
 }]);
 
 },{}],6:[function(require,module,exports){
@@ -219,9 +238,8 @@ angular.module('DashBoardApp.services')
       create: function(data) {
         return $http.post(baseUrl, data);
       },
-      // TODO
       update: function(data) {
-        
+        return $http.put(baseUrl + '/' + data.id, data);
       }
     }
   }
