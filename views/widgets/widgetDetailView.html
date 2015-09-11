@@ -1,3 +1,6 @@
+<!-- include edit form as a second method to edit the widget -->
+<div ng-include src="'views/widgets/editWidgetForm.html'"></div>
+
 <!-- Tables -->
 <div class="row">
   Widget listing
@@ -23,11 +26,30 @@
           <tbody>
             <tr>
               <td class="text-center">{{widget.id}}</td>
-              <td>{{widget.name}}</td>
-              <td>{{widget.color}}</td>
-              <td>{{widget.price}}</td>
-              <td>{{widget.melts | isTrue}}</td>
-              <td>{{widget.inventory}}</td>
+              <td>
+                <!-- edit in place -->
+                <a href="#" editable-text="widget.name">{{widget.name || 'not set'}}</a>
+              </td>
+              <td>
+                <!-- edit in place -->
+                <a href="#" editable-select="widget.color" e-ng-options="c.value as c.color for c in widgetColors">
+                  {{widget.color || 'not set'}}
+                </a>
+              </td>
+              <td>
+                <!-- edit in place -->
+                <a href="#" editable-text="widget.price">${{widget.price || 'not set'}}</a>
+              </td>
+              <td>
+                <!-- edit in place -->
+                <a href="#" editable-select="widget.melts" e-ng-options="m.id as m.value for m in hasMelts">
+                  {{widget.melts | isTrue}}
+                </a>
+              </td>
+              <td>
+                <!-- edit in place -->
+                <a href="#" editable-text="widget.inventory">{{widget.inventory || 'not set'}}</a>
+              </td>
             </tr>
           </tbody>
         </table>

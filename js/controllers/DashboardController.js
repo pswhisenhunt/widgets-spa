@@ -1,10 +1,22 @@
 angular.module('DashBoardApp.controllers', [])
-  .controller('DashboardCtrl', ['$scope', 'UserService', 'WidgetService', function($scope, UserService, WidgetService) {
-    UserService.all().then(function(data) {
-      $scope.users = data;
-    });
+  .controller('DashboardCtrl', ['$scope', '$location', 'UserService', 'WidgetService', function($scope, $location, UserService, WidgetService) {
+    $scope.go = function(path) {
+      $location.path(path);
+    }
 
-    WidgetService.all().then(function(data) {
-      $scope.widgets = data;
-    });
+    $scope.fetchUsers = function() {
+      UserService.all().then(function(data) {
+        $scope.users = data;
+      });
+    }
+
+    $scope.fetchWidgets = function() {
+      WidgetService.all().then(function(data) {
+        $scope.widgets = data;
+      });
+    }
+
+    $scope.fetchUsers();
+
+    $scope.fetchWidgets();
 }]);

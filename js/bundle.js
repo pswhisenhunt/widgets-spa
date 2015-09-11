@@ -5,7 +5,8 @@ var DashBoardApp = angular.module('DashBoardApp', [
   require('angular-route'),
   'DashBoardApp.controllers',
   'DashBoardApp.services',
-  'DashBoardApp.filters'
+  'DashBoardApp.filters',
+  'xeditable'
 ]);
 
 DashBoardApp.config(['$routeProvider',
@@ -37,16 +38,32 @@ DashBoardApp.config(['$routeProvider',
     }
 ]);
 
+DashBoardApp.run(function(editableOptions) {
+  editableOptions.theme = 'bs3'; // bootstrap 3
+});
+
 },{"angular":14,"angular-route":12}],2:[function(require,module,exports){
 angular.module('DashBoardApp.controllers', [])
-  .controller('DashboardCtrl', ['$scope', 'UserService', 'WidgetService', function($scope, UserService, WidgetService) {
-    UserService.all().then(function(data) {
-      $scope.users = data;
-    });
+  .controller('DashboardCtrl', ['$scope', '$location', 'UserService', 'WidgetService', function($scope, $location, UserService, WidgetService) {
+    $scope.go = function(path) {
+      $location.path(path);
+    }
 
-    WidgetService.all().then(function(data) {
-      $scope.widgets = data;
-    });
+    $scope.fetchUsers = function() {
+      UserService.all().then(function(data) {
+        $scope.users = data;
+      });
+    }
+
+    $scope.fetchWidgets = function() {
+      WidgetService.all().then(function(data) {
+        $scope.widgets = data;
+      });
+    }
+
+    $scope.fetchUsers();
+
+    $scope.fetchWidgets();
 }]);
 
 },{}],3:[function(require,module,exports){
@@ -77,7 +94,32 @@ angular.module('DashBoardApp.controllers')
 
     $scope.fetchWidget()
 
-    
+    $scope.showEditWidgetForm = false;
+
+    $scope.setEditWidgetFormDisplay = function() {
+      $scope.showEditWidgetForm = !$scope.showEditWidgetForm;
+    }
+
+    $scope.resetForm = function() {
+      $scope.fetchWidget();
+      $scope.setEditWidgetFormDisplay();
+    }
+
+    $scope.widgetColors = [
+     {value: 1, color: 'red'},
+     {value: 2, color: 'purple'},
+     {value: 3, color: 'black'},
+     {value: 4, color: 'green'},
+     {value: 5, color: 'magenta'},
+     {value: 6, color: 'white'},
+     {value: 7, color: 'depends on the viewing angle'}
+   ];
+
+   $scope.hasMelts = [
+     {id: 1, value: true},
+     {id: 2, value: false}
+   ]
+
 }]);
 
 },{}],6:[function(require,module,exports){

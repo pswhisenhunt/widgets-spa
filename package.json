@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "angular-resource": "^1.4.5",
+    "angular-xeditable": "0.0.1",
     "grunt-contrib-watch": "^0.6.1"
   }
 }

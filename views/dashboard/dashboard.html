@@ -1,7 +1,25 @@
-<!-- Tables -->
-<div class="row">
-  <!-- Users listing -->
-  <div ng-include src="'views/users/usersListView.html'" ng-Controller="UsersCtrl"></div>
-  <!-- Widgets listing -->
-  <div ng-include src="'views/widgets/widgetsListView.html'" ng-Controller="WidgetsCtrl">
-</div><!-- End Tables -->
+<!-- Dashboard Boxes -->
+<div class="row" ng-controller="DashboardCtrl">
+  <div class="col-lg-3 col-md-6 col-xs-12">
+    <div class="widget">
+      <div class="widget-header" ng-click="go('/users')">
+        <div class="widget-icon green pull-left">
+          <i class="fa fa-users"></i>
+        </div>
+        <div class="title">{ {{users.length}} }</div>
+        <div class="comment">Users</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-xs-12">
+    <div class="widget">
+      <div class="widget-header" ng-click="go('/widgets')">
+        <div class="widget-icon green pull-left">
+          <i class="fa fa-users"></i>
+        </div>
+        <div class="title">{ {{widgets.length}} }</div>
+        <div class="comment">Widgets</div>
+      </div>
+    </div>
+  </div>
+</div>

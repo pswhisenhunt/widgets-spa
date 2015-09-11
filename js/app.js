@@ -4,7 +4,8 @@ var DashBoardApp = angular.module('DashBoardApp', [
   require('angular-route'),
   'DashBoardApp.controllers',
   'DashBoardApp.services',
-  'DashBoardApp.filters'
+  'DashBoardApp.filters',
+  'xeditable'
 ]);
 
 DashBoardApp.config(['$routeProvider',
@@ -35,3 +36,7 @@ DashBoardApp.config(['$routeProvider',
       });
     }
 ]);
+
+DashBoardApp.run(function(editableOptions) {
+  editableOptions.theme = 'bs3'; // bootstrap 3
+});
