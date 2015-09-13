@@ -1,9 +1,14 @@
 angular.module('DashBoardApp.controllers')
   .controller('WidgetDetailCtrl', ['$scope', '$routeParams', 'WidgetService', function($scope, $routeParams, WidgetService) {
 
+    $scope.displayError = false;
+
     $scope.fetchWidget = function() {
       WidgetService.get($routeParams.id).then(function(data) {
         $scope.widget = data;
+      }, function(error) {
+        $scope.error = 'Failed to load widget';
+        $scope.displayError = true;
       });
     };
 
@@ -26,6 +31,9 @@ angular.module('DashBoardApp.controllers')
         if ($scope.showEditWidgetForm) {
           $scope.resetForm();
         }
+      }, function(error) {
+        $scope.error = "Failed to update widget";
+        $scope.displayError = true;
       });
     };
 

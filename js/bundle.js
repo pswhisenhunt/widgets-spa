@@ -9,8 +9,8 @@ var DashBoardApp = angular.module('DashBoardApp', [
   'xeditable'
 ]);
 
-DashBoardApp.config(['$routeProvider',
-  function($routeProvider) {
+DashBoardApp.config(['$routeProvider', '$httpProvider',
+  function($routeProvider, $httpProvider) {
     $routeProvider.
       when('/dashboard', {
         templateUrl: "../views/dashboard/dashboard.html",
@@ -35,6 +35,10 @@ DashBoardApp.config(['$routeProvider',
       otherwise({
           redirectTo: '/dashboard'
       });
+
+      $httpProvider.defaults.useXDomain = true;
+      delete $httpProvider.defaults.headers.common['X-Requested-With'];
+      $httpProvider.defaults.headers.common = 'Content-Type: application/json';
     }
 ]);
 
@@ -61,16 +65,28 @@ angular.module('DashBoardApp.controllers', [])
 },{}],3:[function(require,module,exports){
 angular.module('DashBoardApp.controllers')
   .controller('UserDetailCtrl', ['$scope', '$routeParams', 'UserService', function($scope, $routeParams, UserService) {
+
+    $scope.displayError = false;
+
     UserService.get($routeParams.id).then(function(data) {
       $scope.user = data;
+    }, function(error) {
+      $scope.error = 'Failed to load user # ' + $routeParams.id;
+      $scope.displayError = true;
     });
 }]);
 
 },{}],4:[function(require,module,exports){
 angular.module('DashBoardApp.controllers')
   .controller('UsersCtrl', ['$scope', 'UserService', function($scope, UserService) {
+
+    $scope.displayError = false;
+
     UserService.all().then(function(data) {
       $scope.users = data;
+    }, function(error){
+      $scope.error = 'Failed to load users';
+      $scope.displayError = true;
     });
 }]);
 
@@ -78,9 +94,14 @@ angular.module('DashBoardApp.controllers')
 angular.module('DashBoardApp.controllers')
   .controller('WidgetDetailCtrl', ['$scope', '$routeParams', 'WidgetService', function($scope, $routeParams, WidgetService) {
 
+    $scope.displayError = false;
+
     $scope.fetchWidget = function() {
       WidgetService.get($routeParams.id).then(function(data) {
         $scope.widget = data;
+      }, function(error) {
+        $scope.error = 'Failed to load widget';
+        $scope.displayError = true;
       });
     };
 
@@ -103,6 +124,9 @@ angular.module('DashBoardApp.controllers')
         if ($scope.showEditWidgetForm) {
           $scope.resetForm();
         }
+      }, function(error) {
+        $scope.error = "Failed to update widget";
+        $scope.displayError = true;
       });
     };
 
@@ -138,10 +162,15 @@ angular.module('DashBoardApp.controllers')
 angular.module('DashBoardApp.controllers')
   .controller('WidgetsCtrl', ['$scope', 'WidgetService', function($scope, WidgetService) {
 
+    $scope.displayError = false;
+
     $scope.fetchWidgets = function() {
       WidgetService.all().then(function(data) {
           $scope.widgets = data;
           $scope.widgetsLength = data.length;
+      }, function(error) {
+        $scope.error = "Failed to load widgets";
+        $scope.displayError = true;
       });
     }
 
@@ -160,6 +189,7 @@ angular.module('DashBoardApp.controllers')
 
     $scope.setCreateWidgetFormDisplay = function() {
       $scope.showCreateWidgetForm = !$scope.showCreateWidgetForm;
+      $scope.displayError = false;
     }
 
     $scope.resetForm = function() {
@@ -168,7 +198,7 @@ angular.module('DashBoardApp.controllers')
         name: '',
         color: '',
         price: 0,
-        melts: false,
+        melts: true,
         inventory: 0
       }
       $scope.setCreateWidgetFormDisplay()
@@ -177,6 +207,9 @@ angular.module('DashBoardApp.controllers')
     $scope.createWidget = function() {
       WidgetService.create($scope.newWidget).then(function(data) {
         $scope.resetForm();
+      }, function(error) {
+        $scope.error = "Failed to create widget";
+        $scope.displayError = true;
       }).then(function() {
         $scope.fetchWidgets();
       });
@@ -207,7 +240,7 @@ angular.module('DashBoardApp.services')
       get: function(id) {
         return $http.get(baseUrl + '/' + id).then(function(user) {
           return user.data;
-        });
+        }); 
       }
     }
   }

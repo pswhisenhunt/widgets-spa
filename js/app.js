@@ -8,8 +8,8 @@ var DashBoardApp = angular.module('DashBoardApp', [
   'xeditable'
 ]);
 
-DashBoardApp.config(['$routeProvider',
-  function($routeProvider) {
+DashBoardApp.config(['$routeProvider', '$httpProvider',
+  function($routeProvider, $httpProvider) {
     $routeProvider.
       when('/dashboard', {
         templateUrl: "../views/dashboard/dashboard.html",
@@ -34,6 +34,10 @@ DashBoardApp.config(['$routeProvider',
       otherwise({
           redirectTo: '/dashboard'
       });
+
+      $httpProvider.defaults.useXDomain = true;
+      delete $httpProvider.defaults.headers.common['X-Requested-With'];
+      $httpProvider.defaults.headers.common = 'Content-Type: application/json';
     }
 ]);
 
