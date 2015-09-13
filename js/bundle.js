@@ -51,8 +51,8 @@ angular.module('DashBoardApp.controllers', [])
   .controller('DashboardCtrl', ['$scope', '$location', 'UserService', 'WidgetService', function($scope, $location, UserService, WidgetService) {
     $scope.go = function(path) {
       $location.path(path);
-    }
-    
+    };
+
     UserService.all().then(function(data) {
       $scope.numberOfUsers = data.length;
     });
@@ -141,7 +141,7 @@ angular.module('DashBoardApp.controllers')
       $scope.setEditWidgetFormDisplay();
     };
 
-    // xeditable's editable-select feature expects an object
+    // xeditable's editable-select feature expects an array of objects
     $scope.widgetColors = [
      {value: 'red'},
      {value: 'purple'},
@@ -172,7 +172,7 @@ angular.module('DashBoardApp.controllers')
         $scope.error = "Failed to load widgets";
         $scope.displayError = true;
       });
-    }
+    };
 
     $scope.fetchWidgets();
 
@@ -183,14 +183,14 @@ angular.module('DashBoardApp.controllers')
       name: '',
       color: '',
       price: '',
-      melts: false,
+      melts: true,
       inventory: ''
-    }
+    };
 
     $scope.setCreateWidgetFormDisplay = function() {
       $scope.showCreateWidgetForm = !$scope.showCreateWidgetForm;
       $scope.displayError = false;
-    }
+    };
 
     $scope.resetForm = function() {
       $scope.newWidget = {
@@ -200,9 +200,9 @@ angular.module('DashBoardApp.controllers')
         price: 0,
         melts: true,
         inventory: 0
-      }
-      $scope.setCreateWidgetFormDisplay()
-    }
+      };
+      $scope.setCreateWidgetFormDisplay();
+    };
 
     $scope.createWidget = function() {
       WidgetService.create($scope.newWidget).then(function(data) {
@@ -213,7 +213,7 @@ angular.module('DashBoardApp.controllers')
       }).then(function() {
         $scope.fetchWidgets();
       });
-    }
+    };
 }]);
 
 },{}],7:[function(require,module,exports){
@@ -221,7 +221,7 @@ angular.module('DashBoardApp.filters', [])
   .filter('isTrue', function() {
     return function(condition) {
       return condition ? '\u2713' : '\u2718';
-    }
+    };
 });
 
 },{}],8:[function(require,module,exports){
@@ -259,7 +259,7 @@ angular.module('DashBoardApp.services')
       get: function(id) {
         return $http.get(baseUrl + '/' + id).then(function(widget) {
           return widget.data;
-        })
+        });
       },
       create: function(data) {
         return $http.post(baseUrl, data);

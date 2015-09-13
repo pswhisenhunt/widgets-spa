@@ -11,7 +11,7 @@ angular.module('DashBoardApp.controllers')
         $scope.error = "Failed to load widgets";
         $scope.displayError = true;
       });
-    }
+    };
 
     $scope.fetchWidgets();
 
@@ -22,14 +22,14 @@ angular.module('DashBoardApp.controllers')
       name: '',
       color: '',
       price: '',
-      melts: false,
+      melts: true,
       inventory: ''
-    }
+    };
 
     $scope.setCreateWidgetFormDisplay = function() {
       $scope.showCreateWidgetForm = !$scope.showCreateWidgetForm;
       $scope.displayError = false;
-    }
+    };
 
     $scope.resetForm = function() {
       $scope.newWidget = {
@@ -39,9 +39,9 @@ angular.module('DashBoardApp.controllers')
         price: 0,
         melts: true,
         inventory: 0
-      }
-      $scope.setCreateWidgetFormDisplay()
-    }
+      };
+      $scope.setCreateWidgetFormDisplay();
+    };
 
     $scope.createWidget = function() {
       WidgetService.create($scope.newWidget).then(function(data) {
@@ -52,5 +52,5 @@ angular.module('DashBoardApp.controllers')
       }).then(function() {
         $scope.fetchWidgets();
       });
-    }
+    };
 }]);

@@ -10,7 +10,7 @@ angular.module('DashBoardApp.services')
       get: function(id) {
         return $http.get(baseUrl + '/' + id).then(function(widget) {
           return widget.data;
-        })
+        });
       },
       create: function(data) {
         return $http.post(baseUrl, data);
