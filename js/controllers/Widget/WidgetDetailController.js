@@ -48,7 +48,7 @@ angular.module('DashBoardApp.controllers')
       $scope.setEditWidgetFormDisplay();
     };
 
-    // xeditable's editable-select feature expects an array of objects
+    // xeditable's editable-select feature expects an array of key-pair values
     $scope.widgetColors = [
      {value: 'red'},
      {value: 'purple'},
